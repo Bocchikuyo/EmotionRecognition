@@ -34,6 +34,8 @@ pip install -r requirements.txt
 - `predict.py` 单图预测脚本
 - `camera_recognition.py` 摄像头实时识别脚本
 - `model/yolo26n-cls.pt` 初始权重
+- `runs/classify/train/weights/` 训练输出目录
+- `data/emotion-data/` 数据集目录
 
 ## 使用方法
 
@@ -63,6 +65,6 @@ python camera_recognition.py
 
 ## 说明
 
+- `runs/classify/train/weights/` 中保存训练好的模型，可直接用于预测和摄像头识别
+- `data/emotion-data/` 提供训练与复现所需的数据集，便于二次训练和优化
 - 路径已改为相对项目根目录，换机器后无需修改绝对路径
-- `runs/`、数据缓存和 IDE 文件已加入忽略列表
-- 如果你要重新训练，请确保本地存在 `data/emotion-data/` 数据集
