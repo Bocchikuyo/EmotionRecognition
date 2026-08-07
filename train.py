@@ -1,13 +1,17 @@
+from pathlib import Path
+
 from ultralytics import YOLO
 
 
+ROOT = Path(__file__).resolve().parent
+MODEL_PATH = ROOT / "model" / "yolo26n-cls.pt"
+DATA_PATH = ROOT / "data" / "emotion-data"
+
+
 def train():
-    # load a model
-    model = YOLO("model/yolo26n-cls.pt")
-
-    # train the model
-    model.train(data=r"D:\code\PythonProject\EmotionRecognition\data\emotion-data", epochs=100)
+    model = YOLO(str(MODEL_PATH))
+    model.train(data=str(DATA_PATH), epochs=100)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     train()

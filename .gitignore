@@ -1,0 +1,15 @@
+.idea/
+__pycache__/
+*.py[cod]
+*.log
+*.cache
+.env
+.env.*
+.venv/
+venv/
+env/
+runs/
+data/emotion-data/
+yolo26n.pt
+Thumbs.db
+.DS_Store
