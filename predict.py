@@ -23,6 +23,15 @@ def predict():
     print(probs)
     print(f"分类结果: {names_dict[np.argmax(probs)]}")
 
+def predict1():
+    model = YOLO(str(get_model_path()))
+    model.track()
+    result = model(str(IMAGE_PATH))[0]
+    names_dict = result.names
+    probs = result.probs.data.tolist()
+    print(names_dict)
+    print(probs)
+    print(f"分类结果: {names_dict[np.argmax(probs)]}")
 
 if __name__ == "__main__":
     predict()
