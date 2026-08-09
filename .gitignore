@@ -11,3 +11,13 @@ env/
 yolo26n.pt
 Thumbs.db
 .DS_Store
+runs/*
+!runs/classify/
+runs/classify/*
+!runs/classify/SPD_EMA_CA_s/
+runs/classify/SPD_EMA_CA_s/*
+!runs/classify/SPD_EMA_CA_s/train/
+runs/classify/SPD_EMA_CA_s/train/*
+!runs/classify/SPD_EMA_CA_s/train/weights/
+runs/classify/SPD_EMA_CA_s/train/weights/*
+!runs/classify/SPD_EMA_CA_s/train/weights/best.pt

@@ -1,70 +1,37 @@
 # EmotionRecognition
 
-基于 `ultralytics` YOLO 分类模型的情绪识别项目，支持训练、单图预测和本地摄像头实时识别。
+基于 YOLO 分类模型的情绪识别项目。最新版本通过引入 EMA/CA 注意力机制、SPD-Conv、冻结 Backbone 前 3 层以及多项抗过拟合策略，将准确率从 `0.847` 提升到 `0.853`。
 
-## 功能
+## 本次优化
 
-- 使用 `model/yolo26n-cls.pt` 作为初始模型训练
-- 对单张图片进行情绪分类预测
-- 调用本地摄像头进行实时情绪识别
+- 引入 `EMA / CA` 增强特征感知
+- 使用 `SPD-Conv` 减少微表情信息丢失
+- `freeze=3` 冻结 Backbone 前 3 层，聚焦深层注意力模块与分类头
+- 使用 `patience=20`、`weight_decay=0.002`、`dropout=0.2`、`cos_lr=True`、`erasing=0.4` 降低过拟合
+- 预训练权重由 `yolo26n` 升级为 `yolo26s`
 
-## 情绪类别
+## 效果
 
-- `angry`
-- `happy`
-- `sad`
-- `surprise`
+- 准确率：`0.847 -> 0.853`
+- 更适合微表情与细粒度情绪特征提取
 
-## 环境依赖
+## 文件说明
 
-- Python 3.10+
-- `numpy`
-- `opencv-python`
-- `ultralytics`
-
-## 安装
-
-```bash
-pip install -r requirements.txt
-```
-
-## 项目结构
-
-- `train.py` 训练脚本
-- `predict.py` 单图预测脚本
-- `camera_recognition.py` 摄像头实时识别脚本
-- `model/yolo26n-cls.pt` 初始权重
-- `runs/classify/train/weights/` 训练输出目录
-- `data/emotion-data/` 数据集目录
+- `yolo26s_emotion.yaml`：新模型结构配置
+- `model/yolo26s-cls.pt`：small 版预训练权重
+- `runs/classify/SPD_EMA_CA_s/train/weights/best.pt`：训练好的模型，可直接使用
+- `data/`：训练与复现所需数据集
 
 ## 使用方法
 
-### 1. 训练
-
 ```bash
+pip install -r requirements.txt
 python train.py
-```
-
-训练数据默认读取 `data/emotion-data/`。训练结果会保存在 `runs/classify/train/`。
-
-### 2. 单图预测
-
-```bash
 python predict.py
-```
-
-优先使用 `runs/classify/train/weights/best.pt`，如果不存在则回退到 `model/yolo26n-cls.pt`。
-
-### 3. 摄像头实时识别
-
-```bash
 python camera_recognition.py
 ```
 
-默认打开 `0` 号摄像头，按 `ESC` 退出。
+## 备注
 
-## 说明
-
-- `runs/classify/train/weights/` 中保存训练好的模型，可直接用于预测和摄像头识别
-- `data/emotion-data/` 提供训练与复现所需的数据集，便于二次训练和优化
-- 路径已改为相对项目根目录，换机器后无需修改绝对路径
+- `runs` 目录下仅保留并上传 `runs/classify/SPD_EMA_CA_s/train/weights/best.pt`
+- 其余训练日志与中间结果不提交
